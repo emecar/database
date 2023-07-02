@@ -1,0 +1,60 @@
+
+foreign key column must be unique entity with a relationship that must be non-nullable,
+
+For a one-to-one relationship, we can choose which table should have the foreign key column.
+Regardless of which table we choose, the column values must be unique. 
+
+when we have tables in one-to-many relationships, the table representing the "many" side will hold the foreign key columns.
+
+
+==============
+-- one to many
+==============
+CREATE TABLE events (
+    id SERIAL,
+    show_time TIMESTAMP,
+    PRIMARY KEY (id),
+    auditorium_id INT,
+    film_id INT NOT NULL
+);
+
+ALTER TABLE events
+ADD CONSTRAINT fk_events_auditoria
+FOREIGN KEY (auditorium_id)
+REFERENCES auditoria;
+
+ALTER TABLE events
+ADD CONSTRAINT fk_events_films
+FOREIGN KEY (film_id)
+REFERENCES films;
+==============
+-- One to one
+==============
+
+CREATE TABLE accounts (
+   id SERIAL,
+   username TEXT NOT NULL UNIQUE,
+   password TEXT NOT NULL,
+   PRIMARY KEY (id),
+   customer_id INT NOT NULL UNIQUE
+);
+
+
+ALTER TABLE accounts
+ADD CONSTRAINT fk_accounts_customers
+FOREIGN KEY (customer_id)
+REFERENCES customers;
+
+==============
+many to many
+=============
+
+CREATE TABLE customers_events (
+    customer_id INTEGER NOT NULL,
+    event_id INTEGER NOT NULL,
+    PRIMARY KEY (customer_id, event_id)
+);
+
+
+
+Question - doews the one-to-one relationship have to apply a UNIQUE constraint on the column with the foreign key
