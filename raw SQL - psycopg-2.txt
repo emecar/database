@@ -10,9 +10,18 @@ import psycopg2
 # Connect to your postgres DB
 conn = psycopg2.connect(
     """
-    dbname=week3 user=postgres host=localhost port=5432
+    dbname=week3 
+    user=postgres 
+    host=localhost 
+    port=5432
     """
 )
+
+#Alternatively 
+############
+connection_string = "postgresql://username:password@host:port/database_name"
+conn = psycopg2.connect(connection_string)
+############
 
 #set a property to autocommit our changes to the database.
 conn.set_session(autocommit=True)
